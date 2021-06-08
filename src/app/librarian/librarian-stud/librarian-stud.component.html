@@ -1,0 +1,145 @@
+<div class="wrapper">
+
+  <a class="join" href="{{thisUrl}}#popupAdd" (click)="addUser()">
+    <a class="joinsign">Добавить читателя</a>
+  </a>
+
+  <div class="search">
+    <form action="" class="sline">
+      <input [(ngModel)]="str" (input)="findUser(str)" name="findUser" type="text" placeholder="Поиск">
+    </form>
+  </div>
+
+</div>
+
+
+<div class="TableUser">
+
+  <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll">
+    <table>
+      <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Логин</th>
+        <th>Пароль</th>
+        <th>Редактирвоать</th>
+        <th>Удалить</th>
+      </tr>
+      <tr *cdkVirtualFor="let student of students" TableTouch>
+        <td (click)="univUser(student, '#popupOpen')">
+          {{student.userName}}
+        </td>
+        <td (click)="univUser(student, '#popupOpen')">
+          {{student.userLastName}}
+        </td>
+        <td (click)="univUser(student, '#popupOpen')">
+          {{student.userLogin}}
+        </td>
+        <td (click)="univUser(student, '#popupOpen')">
+          {{student.userPass}}
+        </td>
+        <td class="btn" (click)="univUser(student, '#popupEdit')">
+          <a class="buttonEdit">Редактирвоать</a>
+        </td>
+        <td class="btn" (click)="univUser(student,'#popupDelete')">
+          <a class="buttonDel">Удалить</a>
+        </td>
+      </tr>
+    </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+
+
+<div id="popupAdd" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="userForm" (ngSubmit)="submitUserAdd(); clickHref()">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+          <h3>Добавить читателя</h3>
+          <input formControlName="userLogin" placeholder="Логин"/>
+          <input formControlName="userPass" placeholder="Пароль"/>
+          <input formControlName="userName" placeholder="Имя"/>
+          <input formControlName="userLastName" placeholder="Фамилия"/>
+          <input formControlName="userPhone" placeholder="Номер телефона" type="text" mask="+0(000)000-00-00">
+          <textarea formControlName="userAdress" placeholder="Адрес"></textarea>
+
+          <!--          <input formControlName="userFlag" placeholder="Флаг"/>-->
+          <button
+            [disabled]="userForm.invalid"
+            [ngClass]="{formButtonInval: userForm.invalid, formButtonVal: userForm.valid}">Добавить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="popupEdit" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="userForm" (ngSubmit)="submitUserEdit(); clickHref()">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+
+          <h3>Изменить читателя</h3>
+
+          <input value="{{userLoginTitle}}" disabled/>
+          <input formControlName="userPass" placeholder="Пароль"/>
+          <input formControlName="userName" placeholder="Имя"/>
+          <input formControlName="userLastName" placeholder="Фамилия"/>
+          <input formControlName="userPhone" placeholder="Номер телефона" type="text" mask="+0(000)000-00-00">
+          <textarea formControlName="userAdress" placeholder="Адрес"></textarea>
+
+
+          <button
+            [disabled]="userForm.invalid"
+            [ngClass]="{formButtonInval: userForm.invalid, formButtonVal: userForm.valid}">Выполнить
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="popupOpen" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="userForm">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+
+          <h3>Изменить читателя</h3>
+          <input value="{{userLoginTitle}}" readonly/>
+          <input readonly formControlName="userPass"/>
+          <input readonly formControlName="userName"/>
+          <input readonly formControlName="userLastName"/>
+          <input readonly formControlName="userPhone" mask="+0(000)000-00-00">
+          <textarea readonly formControlName="userAdress"></textarea>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="popupDelete" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content contentPopUp">
+      <p class="centerP">Вы точно хотите удалить пользователя <br> {{fullNameUser}} ?</p>
+      <div class="flexBtn">
+        <a class="buttonEdit btnPopUpOk" type="button" href="{{thisUrl}}#" (click)="deleteUser()">Да</a>
+        <a class="buttonEdit btnPopUpCa" type="button" href="{{thisUrl}}#">Нет</a>
+      </div>
+    </div>
+  </div>
+</div>
+

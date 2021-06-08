@@ -1,0 +1,40 @@
+<!--Добавление и поиск-->
+<div class="wrapper">
+  <div class="search">
+    <form action="" class="sline">
+      <input [(ngModel)]="strSearch" name="findBook" type="text" placeholder="Поиск"
+             (input)="findBorrowBook(strSearch)">
+    </form>
+  </div>
+</div>
+
+
+<!--Таблица-->
+<div class="TableUser">
+  <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll">
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Название книги</th>
+        <th>Автор</th>
+        <th>Дата взятия</th>
+        <th>Дата<br>(ожидаемого)<br>возврата</th>
+        <th>Возврат</th>
+      </tr>
+
+      <tr *cdkVirtualFor="let borrowBook of borrowBooks; index as i" TableTouch
+          [ngClass]="{
+        returnBaclground: borrowBook.returnBookCheck,
+        NOreturnBaclground: borrowBook.date.returnBookDate < today && !borrowBook.returnBookCheck
+         }">
+        <td>{{i+1}}</td>
+        <td>{{borrowBook.book.bookName}}</td>
+        <td>{{borrowBook.book.bookAuthor}}</td>
+        <td>{{borrowBook.date.borrowBookDate | date:"dd.MM.yyyy"}}</td>
+        <td>{{borrowBook.date.returnBookDate | date:"dd.MM.yyyy"}}</td>
+        <td>{{borrowBook.returnBookCheck ? 'Вернул' : 'Еще не вернул'}}</td>
+      </tr>
+    </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+

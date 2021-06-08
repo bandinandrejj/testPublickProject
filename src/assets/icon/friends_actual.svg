@@ -1,0 +1,8 @@
+<svg width="26" height="22" xmlns="http://www.w3.org/2000/svg" fill="none">
+
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#5e81f4" d="m13.1103,9.17654c2.7161,0 4.9179,-1.83038 4.9179,-4.08827c0,-2.25789 -2.2018,-4.08827 -4.9179,-4.08827c-2.7161,0 -4.91798,1.83038 -4.91798,4.08827c0,2.25789 2.20188,4.08827 4.91798,4.08827z"/>
+  <path id="svg_2" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#5e81f4" d="m22.8414,21l-19.46057,0c-0.84681,0 -1.48845,-0.627 -1.36576,-1.3243c0.78245,-4.4963 5.48516,-7.996 11.09503,-7.996c5.6099,0 10.3146,3.5014 11.097,7.996c0.1227,0.6973 -0.5189,1.3243 -1.3657,1.3243z" clip-rule="evenodd" fill-rule="evenodd"/>
+ </g>
+</svg>

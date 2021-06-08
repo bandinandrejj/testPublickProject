@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="container" id="container">
+    <div class="form-container sign-in-container">
+
+      <form novalidate [formGroup]="authForm" (ngSubmit)="submitAuth()">
+        <h1>Авторизация</h1>
+        <input formControlName="userLogin" placeholder="Логин"/>
+        <input formControlName="userPass" type="password" placeholder="Пароль"/>
+        <p *ngIf="userPassInvalid">ПАРОЛЬ НЕПРАВИЛЬНЫЙ !!</p>
+        <p *ngIf="userAuthInvalid">ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕ СУШЕСТВУЕТ!</p>
+        <button [disabled]="authForm.invalid" [ngClass]="{formButtonInval: authForm.invalid, formButtonVal: authForm.valid}">Войти</button>
+      </form>
+
+
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-right">
+          <h1>Привет, Друг!</h1>
+          <p>Введите свои личные данные и отправляйтесь в путешествие вместе с нами !</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

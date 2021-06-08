@@ -1,0 +1,199 @@
+<!--Добавление и поиск-->
+<div class="wrapper">
+  <a class="join" href="{{thisUrl}}#popupAdd" (click)="addBook()">
+
+    <a class="joinsign">Добавить книгу</a>
+  </a>
+
+  <div class="search">
+    <form action="" class="sline">
+      <input [(ngModel)]="str" (input)="findBook(str)" name="findBook" type="text" placeholder="Поиск">
+
+    </form>
+  </div>
+</div>
+
+<!--Таблица-->
+<div class="TableUser">
+  <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll">
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Жанр</th>
+        <th>Кол-во</th>
+        <th>В наличии</th>
+        <th>Комментарии</th>
+        <th>Редактирвоать</th>
+        <th>Удалить</th>
+      </tr>
+      <tr *cdkVirtualFor="let book of books" TableTouch [ngClass]="{nullInStockBaclground: book.bookInStock <= 0}">
+        <td>{{book.bookName}}</td>
+        <td>{{book.bookAuthor}}</td>
+        <td>{{book.bookGenre}}</td>
+        <td>{{book.bookCount}}</td>
+        <td>{{book.bookInStock}}</td>
+
+        <td (click)="clickHref('#popupComment'); dataComment(book)">
+          <a class="buttonOpen">Открыть</a>
+        </td>
+        <td class="btn" (click)="clickHref('#popupEdit'); univBook(book)">
+          <a class="buttonEdit">Редактирвоать</a>
+        </td>
+        <td class="btn" (click)="clickHref('#popupDel'); univBook(book)">
+          <a class="buttonDel">Удалить</a>
+        </td>
+      </tr>
+
+    </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+
+<!--Попап Добавления-->
+<div id="popupAdd" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+
+      <form class="decor" novalidate [formGroup]="bookForm" (ngSubmit)="submitBookAdd(); clickHref()">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+          <h3>Добавить книгу</h3>
+          <input formControlName="bookName" placeholder="Название книги"/>
+          <input formControlName="bookAuthor" placeholder="Автор (Фамилия + Имя)"/>
+          <input formControlName="bookGenre" placeholder="Жанр"/>
+          <label for="count">Количество</label>
+          <input id="count" type="number" min="1" formControlName="bookCount" placeholder="Количество"/>
+          <button
+            [disabled]="bookForm.invalid"
+            [ngClass]="{formButtonInval: bookForm.invalid, formButtonVal: bookForm.valid}">Добавить
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!--Попап Редактирования-->
+<div id="popupEdit" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="bookForm" (ngSubmit)="submitBookEdit(); clickHref()">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+          <h3>Изменить книгу</h3>
+          <input value="{{bookName}}" disabled/>
+          <input value="{{booAuthor}}" disabled/>
+          <input formControlName="bookGenre" placeholder="Жанр"/>
+          <input type="number" min="1" formControlName="bookCount" placeholder="Количество"/>
+          <input type="number" min="0" [max]="bookForm.value['bookCount']" formControlName="bookInStock" placeholder="Количество"/>
+          <button
+            [disabled]="bookForm.invalid"
+            [ngClass]="{formButtonInval: bookForm.invalid, formButtonVal: bookForm.valid}">Изменить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Попап Удаления-->
+<div id="popupDel" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="bookForm" (ngSubmit)="submitBookDel(); clickHref()">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+          <h3>Удалить книгу</h3>
+          <input value="{{bookName}}" disabled/>
+          <input value="{{booAuthor}}" disabled/>
+          <input readonly formControlName="bookGenre" placeholder="Жанр"/>
+          <input readonly formControlName="bookCount" placeholder="Количество"/>
+          <input readonly formControlName="bookInStock" placeholder="В наличии"/>
+          <button class="del">Удалить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Попап Комментариев (Добавление)-->
+<div id="popupComment" class="overlay">
+  <div class="popup popupComm">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+
+    <div class="contentComment">
+
+      <div class="divLeftPopComment">
+
+        <div class="ComName">{{bookComName}}</div>
+        <div class="ComAuthor">({{bookComAuthor}})</div>
+
+        <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll-comment">
+
+        <div *cdkVirtualFor="let comment of comments">
+          <div *ngIf="comment.bookKey === keyBookInCom" class="container">
+            <div class="piccont">
+              <div class="pic">
+                <div class="picsign">
+                  {{comment.userLastName[0]}}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="btnComm">
+                <a (click)="commentEdit(comment)" class="buttonEdit">Ред</a>
+                <a (click)="buttonDelete(comment)" class="buttonDel">Уд</a>
+              </div>
+              <p class="userComName">{{comment.userName}} {{comment.userLastName}}</p>
+              <p class="userComDisc">{{comment.userComment}}</p>
+            </div>
+          </div>
+        </div>
+        </cdk-virtual-scroll-viewport>
+
+      </div>
+
+
+      <div *ngIf="addEditSwitch" class="divRightPopComment">
+        <form class="formCom" [formGroup]="bookCommentForm" novalidate (ngSubmit)="submitComentAdd()">
+          <div class="form-group">
+            <div class="userComDiscCenter">Добавить комментарий</div>
+            <textarea class="textareaCom" formControlName="userComment"></textarea>
+          </div>
+          <div class="form-group">
+            <button
+              [disabled]="bookCommentForm.invalid"
+              [ngClass]="{formButtonInval: bookCommentForm.invalid, formButtonVal: bookCommentForm.valid}">Добавить
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="addEditSwitch === false" class="divRightPopComment">
+        <form class="formCom" [formGroup]="bookCommentForm" novalidate (ngSubmit)="submitComentEdit()">
+          <div class="form-group">
+            <div class="userComDiscCenter">Изменить комментарий</div>
+            <textarea class="textareaCom" formControlName="userComment"></textarea>
+          </div>
+          <div class="form-group">
+            <button
+              [disabled]="bookCommentForm.invalid"
+              [ngClass]="{formButtonInval: bookCommentForm.invalid, formButtonVal: bookCommentForm.valid}">Изменить
+            </button>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<!--Добавление и поиск-->
+<div class="wrapper">
+  <div class="search">
+    <form action="" class="sline">
+      <input [(ngModel)]="str" (input)="findBook(str)" name="findBook" type="text" placeholder="Поиск">
+
+    </form>
+  </div>
+</div>
+
+<!--Таблица-->
+<div class="TableUser">
+  <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll">
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Жанр</th>
+        <th>Кол-во</th>
+        <th>В наличии</th>
+        <th>Комментарии</th>
+
+      </tr>
+      <tr *cdkVirtualFor="let book of books; index as i" TableTouch [ngClass]="{nullInStockBaclground: book.bookInStock <= 0}">
+        <td>{{i+1}}</td>
+        <td>{{book.bookName}}</td>
+        <td>{{book.bookAuthor}}</td>
+        <td>{{book.bookGenre}}</td>
+        <td>{{book.bookCount}}</td>
+        <td>{{book.bookInStock <= 0 ? 'Нету в наличии' : 'Есть в наличии'}}</td>
+
+        <td (click)="clickHref('#popupComment'); dataComment(book)">
+          <a class="buttonOpen">Открыть</a>
+        </td>
+      </tr>
+
+    </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+
+
+<!--Попап Комментариев (Добавление)-->
+<div id="popupComment" class="overlay">
+  <div class="popup popupComm">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+
+    <div class="contentComment">
+
+      <div class="divLeftPopComment">
+
+        <div class="ComName">{{bookComName}}</div>
+        <div class="ComAuthor">({{bookComAuthor}})</div>
+
+        <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll-comment">
+
+          <div *cdkVirtualFor="let comment of comments">
+            <div *ngIf="comment.bookKey === keyBookInCom" class="container">
+              <div class="piccont">
+                <div class="pic">
+                  <div class="picsign">
+                    {{comment.userLastName[0]}}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="btnComm">
+                  <a *ngIf="comment.userKey === userKey" (click)="commentEdit(comment)" class="buttonEdit">Ред</a>
+                  <a *ngIf="comment.userKey === userKey" (click)="buttonDelete(comment)" class="buttonDel">Уд</a>
+                </div>
+                <p class="userComName">{{comment.userName}} {{comment.userLastName}}</p>
+                <p class="userComDisc">{{comment.userComment}}</p>
+              </div>
+            </div>
+          </div>
+        </cdk-virtual-scroll-viewport>
+
+      </div>
+
+
+      <div *ngIf="addEditSwitch" class="divRightPopComment">
+        <form class="formCom" [formGroup]="bookCommentForm" novalidate (ngSubmit)="submitComentAdd()">
+          <div class="form-group">
+            <div class="userComDiscCenter">Добавить комментарий</div>
+            <textarea class="textareaCom" formControlName="userComment"></textarea>
+          </div>
+          <div class="form-group">
+            <button
+              [disabled]="bookCommentForm.invalid"
+              [ngClass]="{formButtonInval: bookCommentForm.invalid, formButtonVal: bookCommentForm.valid}">Добавить
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="addEditSwitch === false" class="divRightPopComment">
+        <form class="formCom" [formGroup]="bookCommentForm" novalidate (ngSubmit)="submitComentEdit()">
+          <div class="form-group">
+            <div class="userComDiscCenter">Изменить комментарий</div>
+            <textarea class="textareaCom" formControlName="userComment"></textarea>
+          </div>
+          <div class="form-group">
+            <button
+              [disabled]="bookCommentForm.invalid"
+              [ngClass]="{formButtonInval: bookCommentForm.invalid, formButtonVal: bookCommentForm.valid}">Изменить
+            </button>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>

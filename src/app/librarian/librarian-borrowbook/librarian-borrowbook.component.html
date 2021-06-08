@@ -1,0 +1,184 @@
+<!--Добавление и поиск-->
+<div class="wrapper">
+  <a class="join" (click)="resetForm()" href="{{thisUrl}}#popupAdd">
+    <a class="joinsign">Арендовать книгу</a>
+  </a>
+
+  <div class="search">
+    <form action="" class="sline">
+      <input [(ngModel)]="strSearch" name="findBook" type="text" placeholder="Поиск"
+             (input)="findBorrowBook(strSearch)">
+      <!--      (input)="findBook(str)"-->
+
+    </form>
+  </div>
+</div>
+
+
+<!--Таблица-->
+<div class="TableUser">
+  <cdk-virtual-scroll-viewport itemSize="10" class="virtual-scroll">
+    <table>
+      <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Название книги</th>
+        <th>Автор</th>
+        <th>Дата взятия</th>
+        <th>Дата<br>(ожидаемого)<br>возврата</th>
+        <th>Ред</th>
+        <th>Уд</th>
+        <th>Возврат</th>
+      </tr>
+
+
+      <tr *cdkVirtualFor="let borrowBook of borrowBooks" TableTouch
+          [ngClass]="{
+        returnBaclground: borrowBook.returnBookCheck,
+        NOreturnBaclground: borrowBook.date.returnBookDate < today && !borrowBook.returnBookCheck
+         }">
+
+        <td>{{borrowBook.student.studLastName}}</td>
+        <td>{{borrowBook.student.studName}}</td>
+        <td>{{borrowBook.book.bookName}}</td>
+        <td>{{borrowBook.book.bookAuthor}}</td>
+        <td>{{borrowBook.date.borrowBookDate | date:"dd.MM.yyyy"}}</td>
+        <td>{{borrowBook.date.returnBookDate | date:"dd.MM.yyyy"}}</td>
+
+
+        <td class="btn" (click)="clickHref('#popupEdit'); dataBorrowBook(borrowBook)">
+          <a class="buttonEdit">Ред</a>
+        </td>
+
+        <td class="btn" (click)="clickHref('#popupDelete'); dataBorrowBook(borrowBook)">
+          <a class="buttonDel">Уд</a>
+        </td>
+
+        <td class="btn">
+          <label class="switch">
+            <input type="checkbox" [checked]="borrowBook.returnBookCheck" (click)="returnBookCheck(borrowBook)">
+            <span class="slider round"></span>
+          </label>
+        </td>
+
+      </tr>
+    </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+
+
+<div id="popupAdd" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="borrowBookForm">
+        <!--        [formGroup]="userForm" (ngSubmit)="submitUserAdd(); clickHref()"-->
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+
+          <h3>Добавить бронь книги</h3>
+          <form formGroupName="student">
+            <label>Студент: </label>
+            <select formControlName="studKey" class="selInput" >
+              <option *ngFor="let student of students" [value]="student.key">
+                <p>{{student.userName}} {{student.userLastName}}</p>
+              </option>
+            </select>
+          </form>
+
+          <form formGroupName="book">
+            <label>Книга: </label>
+            <select formControlName="bookKey" class="selInput">
+              <ng-container *ngFor="let book of books">
+                <option *ngIf="book.bookInStock > 0" [value]="book.key">
+                  <p>{{book.bookName}} ({{book.bookAuthor}})</p>
+                </option>
+              </ng-container>
+            </select>
+          </form>
+
+          <form formGroupName="date">
+            <label>Дата взятие книги: </label>
+            <input formControlName="borrowBookDate" type="date">
+            <label>Дата возврата книги: </label>
+            <input formControlName="returnBookDate" type="date">
+          </form>
+
+
+          <button class="mgTop" (click)="addBorrowBook()" [disabled]="borrowBookForm.invalid"
+                  [ngClass]="{formButtonInval: borrowBookForm.invalid, formButtonVal: borrowBookForm.valid}">Добавить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="popupEdit" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate [formGroup]="borrowBookForm">
+        <!--        [formGroup]="userForm" (ngSubmit)="submitUserAdd(); clickHref()"-->
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+
+          <h3>Изменить бронь книги</h3>
+
+          <input readonly type="text" [value]="borrowBookForm.controls['student'].value['studName']
+            + ' ' + borrowBookForm.controls['student'].value['studLastName']">
+
+          <form formGroupName="book">
+            <select formControlName="bookKey" class="selInput">
+              <option *ngFor="let book of books" [value]="book.key">
+                <p>{{book.bookName}} ({{book.bookAuthor}})</p>
+              </option>
+            </select>
+          </form>
+
+          <form formGroupName="date">
+            <input formControlName="borrowBookDate" type="date">
+            <input formControlName="returnBookDate" type="date">
+          </form>
+
+
+          <button (click)="EditBorrowBook()" [disabled]="borrowBookForm.invalid"
+                  [ngClass]="{formButtonInval: borrowBookForm.invalid, formButtonVal: borrowBookForm.valid}">Изменить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="popupDelete" class="overlay">
+  <div class="popup">
+    <a class="close" href="{{thisUrl}}#">&times;</a>
+    <div class="content">
+      <form class="decor" novalidate>
+        <!--        [formGroup]="userForm" (ngSubmit)="submitUserAdd(); clickHref()"-->
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="form-inner">
+
+          <h3>Удалить бронь книги</h3>
+
+
+          <input readonly type="text" [value]="borrowBookForm.controls['student'].value['studName']
+            + ' ' + borrowBookForm.controls['student'].value['studLastName']">
+
+          <input readonly type="text" [value]="borrowBookForm.controls['book'].value['bookName']
+            + ' ' + '(' + borrowBookForm.controls['book'].value['bookAuthor']  + ')'">
+
+          <input readonly type="date" [value]="borrowBookForm.controls['date'].value['borrowBookDate']">
+          <input readonly type="date" [value]="borrowBookForm.controls['date'].value['returnBookDate']">
+
+
+          <button (click)="DeleteBorrowBook()">Удалить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

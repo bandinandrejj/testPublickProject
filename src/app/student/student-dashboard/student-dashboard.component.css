@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.btn:active {
+  transform: scale(.95);
+}
+
+th {
+  padding: 10px;
+}
+
+tr > th {
+  border-bottom: solid 1px;
+  border-left: solid 1px;
+}
+
+tr > td {
+  border-left: solid 1px;
+}
+
+tr > td:first-child, tr > th:first-child {
+  border-left: 0;
+}
+
+
+/*-----------------[Кнопка поиска]-----------------*/
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  margin: 30px 0;
+  flex-direction: row;
+}
+
+.search > form > input {
+  width: 472px;
+  height: 56px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  outline: none;
+  padding-left: 57px;
+}
+
+.search > form > input:focus {
+  border: none;
+  outline: none;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 57px;
+}
+
+.search > form:focus {
+  border: none;
+}
+
+
+/*-----------------[Кнопка добавления]-----------------*/
+
+
+.join {
+  text-decoration: none;
+  display: flex;
+  background-color: #5E81F4;
+  border-radius: 10px;
+  width: 192px;
+  height: 48px;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.join:active {
+  transform: scale(.95);
+}
+
+.joinsign {
+
+  display: table-cell;
+  margin: auto;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+/*-----------------[POP-UP]-----------------*/
+
+
+.buttonEdit {
+  background-color: #ffd800;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px 10px;
+
+  font-family: 'Inter', sans-serif;
+  color: black;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.buttonDel {
+  background-color: #ff6e79;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px 10px;
+
+  font-family: 'Inter', sans-serif;
+  color: black;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.buttonDel:active {
+  transform: scale(.95);
+}
+
+
+/*.button {*/
+/*  font-size: 1em;*/
+/*  padding: 10px;*/
+/*  color: #fff;*/
+/*  border: 2px solid #06D85F;*/
+/*  border-radius: 20px/50px;*/
+/*  text-decoration: none;*/
+/*  cursor: pointer;*/
+/*  transition: all 0.3s ease-out;*/
+/*}*/
+
+/*.button:hover {*/
+/*  background: #06D85F;*/
+/*}*/
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  /*transition: all 1s ease-in-out;*/
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  /*transition: all 200ms;*/
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+
+.popup .close:hover {
+  color: #06D85F;
+}
+
+
+.popup .content {
+  /*display: flex;*/
+  max-height: 30%;
+  overflow: auto;
+}
+
+.contentPopUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 150px;
+}
+
+.flexBtn {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.formPopUp {
+
+}
+
+.btnPopUpOk {
+  padding: 10px 40px;
+}
+
+.btnPopUpOk:active {
+  transform: scale(.95);
+}
+
+.btnPopUpCa {
+  padding: 10px 40px;
+}
+
+.btnPopUpCa:active {
+  transform: scale(.95);
+}
+
+
+.buttonEdit:active {
+  transform: scale(.95);
+}
+
+
+/*------Test-----*/
+
+.popup {
+  width: 35%;
+  background-color: #9b9b9b;
+}
+
+.decor {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 30px;
+}
+
+.form-left-decoration, .form-right-decoration {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  background: #f69a73;
+  border-radius: 20px;
+}
+
+.form-left-decoration {
+  bottom: 60px;
+  left: -30px;
+}
+
+.form-right-decoration {
+  top: 60px;
+  right: -30px;
+}
+
+.form-left-decoration:before, .form-left-decoration:after, .form-right-decoration:before, .form-right-decoration:after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  border-radius: 30px;
+  background: white;
+}
+
+.form-left-decoration:before {
+  top: -20px;
+}
+
+.form-left-decoration:after {
+  top: 20px;
+  left: 10px;
+}
+
+.form-right-decoration:before {
+  top: -20px;
+  right: 0;
+}
+
+.form-right-decoration:after {
+  top: 20px;
+  right: 10px;
+}
+
+.circle {
+  position: absolute;
+  bottom: 80px;
+  left: -55px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+}
+
+.form-inner {
+  padding: 30px 90px 30px 60px;
+}
+
+.form-inner input, .form-inner textarea {
+  display: block;
+  width: 250px;
+  height: 50px;
+  padding: 0 20px;
+  margin-bottom: 10px;
+  background: #E9EFF6;
+  line-height: 40px;
+  /*border-width: 0;*/
+  /*border-radius: 20px;*/
+  font-family: 'Roboto', sans-serif;
+}
+
+.virtual-scroll {
+  height: 337px;
+  width: 100%;
+}
+
+/*.form-inner input[type="submit"] {*/
+/*  margin-top: 30px;*/
+/*  background: #f69a73;*/
+/*  !*border-bottom: 4px solid #d87d56;*!*/
+/*  color: white;*/
+/*  font-size: 14px;*/
+/*}*/
+
+.form-inner textarea {
+  resize: none;
+}
+
+.form-inner h3 {
+  margin-top: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: #707981;
+}
+
+.btnNo {
+  opacity: 0.5;
+}
+
+.centerP {
+  text-align: center;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid #f69a73;
+  background: #f69a73;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+
+button:active {
+  transform: scale(.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background: transparent;
+  border-color: #fff;
+}
+
+button.del {
+  border-color: #f44336;
+  background: #f44336;
+}
+
+
+.formButtonInval {
+  opacity: 0.5;
+}
+
+.formButtonVal {
+  cursor: pointer;
+}
+
+
+
+input.ng-invalid {
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+input.ng-valid {
+  border: 2px solid green;
+  border-radius: 4px;
+}
+
+input[readonly] {
+  color: rgb(84, 84, 84);
+  cursor: default;
+  background-color: rgba(239, 239, 239, 0.3);
+  border-color: rgba(118, 118, 118, 0.3);
+}
+
+/*Toggle Switch*/
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #bb4e4e;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #257cd4;
+}
+
+
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.selInput {
+  /*display: block;*/
+  width: 294px;
+  height: 50px;
+  padding: 0 20px;
+  margin-bottom: 10px;
+  background: #E9EFF6;
+  line-height: 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.selInput.ng-invalid {
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+.selInput.ng-valid {
+  border: 2px solid green;
+  border-radius: 4px;
+}
+
+.returnBaclground > td{
+  background-color: rgba(6, 216, 95, 0.5);
+}
+
+.NOreturnBaclground > td{
+  background-color: rgba(245, 86, 86, 0.5);
+}
+
+label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+.mgTop {
+  margin-top: 10px;
+}
